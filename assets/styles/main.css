@@ -1,0 +1,125 @@
+main {
+	max-width: 45rem;
+	font-size: 1.5rem;
+	margin: 0 auto;
+
+	@media (min-width: 65em) {
+		max-width: 65rem;
+	}
+
+	h1 {
+		margin: 0 auto;
+		text-align: center;
+    color: var(--offwhite);
+    font: normal normal 5rem/1.2 'acier-bat-noir', 'Didot', sans-serif;
+
+		@media (min-width: 35em) {
+			font-size: 6.5rem;
+		}
+	}
+}
+
+/*.response-text {
+	max-width: 45rem;
+	background-color: #EDEDED;
+  color: var(--darkgrey);
+	font-family: monospace;
+	padding: 2.5rem;
+	margin: 2.5rem auto 1.25rem;
+  box-shadow: 0 3px 50px rgba(255, 255, 255, 0.3);
+}*/
+
+.responses {
+	text-align: center;
+	padding-left: 0;
+	margin: 1.25em auto 0;
+
+  @media (min-width: 35em) {
+    text-align: justify;
+  }
+}
+
+.article {
+	padding-right: 10px;
+}
+
+.article:last-child {
+	padding-right: 0;
+}
+
+.response {
+	display: inline-block;
+	line-height: 1.4;
+	color: var(--offwhite);
+	padding: 0 0.35em;
+
+	&.size1 {
+		font-size: 1.2em;
+	}
+
+	&.size2 {
+		font-size: 1.4em;
+		opacity: 0.75;
+	}
+
+	&.size3 {
+		font-size: 1.6em;
+		opacity: 0.75;
+	}
+
+	&.size4 {
+		font-size: 1.8em;
+	}
+}
+
+.status {
+  animation: add-status 0.35s ease-out backwards;
+	max-width: 45rem;
+	background-color: #EDEDED;
+	color: var(--darkgrey);
+	font-family: monospace;
+	text-align: center;
+	padding: 1.25rem;
+	margin: 1.25rem auto;
+	box-shadow: 0 3px 50px rgba(255, 255, 255, 0.3);
+
+	&.success {
+		/* Emma's seafoam green. */
+		background-color: #48C9B0;
+		color: var(--offwhite);
+	}
+
+	&.failure {
+		background-color: #DB4A30;
+		color: var(--offwhite);
+	}
+
+	&.remove {
+		animation: remove-status 0.35s ease-in forwards;
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+@keyframes add-status {
+	from {
+		transform: scale(0.2);
+    opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes remove-status {
+	from {
+		z-index: -1;
+	}
+	to {
+		transform: translateY(-125vh);
+		opacity: 0;
+	}
+}
