@@ -8,9 +8,18 @@ var gulp       = require('gulp'),
 	sprite     = require('gulp-svg-sprite');
 
 var paths = {
-	styles:  ['assets/styles/*.css', '!assets/styles/build/**'],
-	scripts: ['node_modules/boomsvgloader/dist/js/boomsvgloader.js', 'assets/scripts/*.js', '!assets/scripts/build/**'],
-	sprites: ['assets/images/icons/*.svg', '!assets/images/icons/icon-sprite.svg']
+	styles: {
+		src: 'assets/styles/app.css',
+		dest: 'assets/styles/build/'
+	},
+	scripts: {
+		src: ['node_modules/boomsvgloader/dist/js/boomsvgloader.js', 'assets/scripts/*.js', '!assets/scripts/build/**'],
+		dest: 'assets/scripts/build/'
+	},
+	sprites: {
+		src: ['assets/images/icons/*.svg', '!assets/images/icons/icon-sprite.svg'],
+		dest: 'assets/images/icons'
+	}
 };
 
 var processors = [
@@ -22,24 +31,24 @@ var processors = [
 	require('cssnano')({autoprefixer: false, reduceIdents: false}) // Autoprefixer has just been run, don't do it again; reduceIdents is pretty unsafe.
 ];
 
-gulp.task(function styles() {
-	return gulp.src('assets/styles/app.css')
+function styles() {
+	return gulp.src(paths.styles.src)
 		.pipe(sourcemaps.init())
 			.pipe(postcss(processors))
 		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest('assets/styles/build/'));
-});
+		.pipe(gulp.dest(paths.styles.dest));
+}
 
-gulp.task(function scripts() {
-	return gulp.src(paths.scripts)
+function scripts() {
+	return gulp.src(paths.scripts.src)
 		.pipe(sourcemaps.init())
 			.pipe(concat('app.js'))
 			.pipe(uglify())
 		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest('assets/scripts/build/'));
-});
+		.pipe(gulp.dest(paths.scripts.dest));
+}
 
-gulp.task(function sprites() {
+function sprites() {
 	var options = {
 		mode: {
 			symbol: { // Create a «symbol» sprite.
@@ -50,24 +59,31 @@ gulp.task(function sprites() {
 		}
 	};
 
-	return gulp.src(paths.sprites)
+	return gulp.src(paths.sprites.src)
 		.pipe(sprite(options))
-		.pipe(gulp.dest('assets/images/icons'));
-});
+		.pipe(gulp.dest(paths.sprites.dest));
+}
 
-gulp.task(function watch() {
-	gulp.watch(paths.styles, gulp.series('styles'));
-	gulp.watch(paths.scripts, gulp.series('scripts'));
-	gulp.watch(paths.sprites, gulp.series('sprites'));
-});
+function watch() {
+	gulp.watch(paths.styles.src, styles);
+	gulp.watch(paths.scripts.src, scripts);
+	gulp.watch(paths.sprites.src, sprites);
+}
 
 // Workflows
 // $ gulp: Builds and watches for changes. The works.
-gulp.task('default', gulp.parallel('styles', 'scripts', 'sprites', 'watch', function(done) {
-	done();
-}));
+var defaultTask = gulp.parallel(styles, scripts, sprites, watch);
 
 // $ gulp build: Builds for deployments.
-gulp.task('build', gulp.parallel('styles', 'scripts', 'sprites', function(done) {
-	done();
-}));
+var buildTask = gulp.parallel(styles, scripts, sprites);
+
+// Exports
+// Externalise individual tasks.
+exports.styles = styles;
+exports.scripts = scripts;
+exports.sprites = sprites;
+exports.watch = watch;
+
+// Externalise Workflows.
+exports.build = buildTask;
+exports.default = defaultTask;
