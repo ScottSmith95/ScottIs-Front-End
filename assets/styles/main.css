@@ -73,7 +73,7 @@ main {
 }
 
 .status {
-  animation: add-status 0.35s ease-out backwards;
+	animation: add-status 0.35s ease-out backwards;
 	max-width: 45rem;
 	background-color: #EDEDED;
 	color: var(--darkgrey);
