@@ -10,8 +10,8 @@ main {
 	h1 {
 		margin: 0 auto;
 		text-align: center;
-    color: var(--offwhite);
-    font: normal normal 5rem/1.2 'acier-bat-noir', 'Didot', sans-serif;
+		color: var(--offwhite);
+		font: normal normal 5rem/1.2 'acier-bat-noir', sans-serif;
 
 		@media (min-width: 35em) {
 			font-size: 6.5rem;
@@ -22,11 +22,11 @@ main {
 /*.response-text {
 	max-width: 45rem;
 	background-color: #EDEDED;
-  color: var(--darkgrey);
+	color: var(--darkgrey);
 	font-family: monospace;
 	padding: 2.5rem;
 	margin: 2.5rem auto 1.25rem;
-  box-shadow: 0 3px 50px rgba(255, 255, 255, 0.3);
+	box-shadow: 0 3px 50px rgba(255, 255, 255, 0.3);
 }*/
 
 .responses {
@@ -35,7 +35,7 @@ main {
 	margin: 1.25em auto 0;
 
   @media (min-width: 35em) {
-    text-align: justify;
+	text-align: justify;
   }
 }
 
@@ -106,7 +106,7 @@ main {
 @keyframes add-status {
 	from {
 		transform: scale(0.2);
-    opacity: 0;
+	opacity: 0;
 	}
 	to {
 		transform: scale(1);

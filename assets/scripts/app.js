@@ -1,8 +1,8 @@
 'use strict';
 
 /* Global Variables */
-var get_url = 'https://api.scottsmith.is/v1.1/responses'
-var post_url = 'https://api.scottsmith.is/v1.1/responses'
+var get_url = 'http://dev-api.scottsmith.is/v1.1/responses'
+var post_url = 'http://dev-api.scottsmith.is/v1.1/responses'
 var response_json
 
 /* Page Elements */
@@ -190,9 +190,11 @@ var helpText = document.querySelector('.help-text');
 
 	function after_response(httpRequest) {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
-			if (httpRequest.status === 202) {
+			if (httpRequest.status === 200) {
 				scottis.make_alert("Success! Message posted. 👍", 'success');
 				load_responses(get_url)
+			} else if (httpRequest.status === 202) {
+				scottis.make_alert("Uh oh! That is a duplicate response. Try coming up with something new!", 'failure');
 			} else {
 				scottis.make_alert("Uh small problem. Tell me about it. 😕", 'failure');
 				console.log('There was a problem with the request.');
