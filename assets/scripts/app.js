@@ -1,8 +1,8 @@
 'use strict';
 
 /* Global Variables */
-var get_url = 'http://dev-api.scottsmith.is/v1.1/responses'
-var post_url = 'http://dev-api.scottsmith.is/v1.1/responses'
+var get_url = 'https://api.scottsmith.is/v1.1/responses'
+var post_url = 'https://api.scottsmith.is/v1.1/responses'
 var response_json
 
 /* Page Elements */
