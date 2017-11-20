@@ -19,16 +19,6 @@ main {
 	}
 }
 
-/*.response-text {
-	max-width: 45rem;
-	background-color: #EDEDED;
-	color: var(--darkgrey);
-	font-family: monospace;
-	padding: 2.5rem;
-	margin: 2.5rem auto 1.25rem;
-	box-shadow: 0 3px 50px rgba(255, 255, 255, 0.3);
-}*/
-
 .responses {
 	text-align: center;
 	padding-left: 0;
