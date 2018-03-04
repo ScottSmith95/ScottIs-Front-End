@@ -1,13 +1,13 @@
 'use strict';
 
-var gulp       = require('gulp'),
-	sourcemaps = require('gulp-sourcemaps'),
-	postcss    = require('gulp-postcss'),
-	concat     = require('gulp-concat'),
-	uglify     = require('gulp-uglify'),
-	sprite     = require('gulp-svg-sprite');
+const gulp       = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
+const postcss    = require('gulp-postcss');
+const concat     = require('gulp-concat');
+const uglify     = require('gulp-uglify');
+const sprite     = require('gulp-svg-sprite');
 
-var paths = {
+const paths = {
 	styles: {
 		src: 'assets/styles/app.css',
 		dest: 'assets/styles/build/'
@@ -22,7 +22,7 @@ var paths = {
 	}
 };
 
-var processors = [
+const processors = [
 	require('postcss-import'),
 	require('postcss-nested'),
 	require('postcss-custom-properties'),
@@ -72,10 +72,10 @@ function watch() {
 
 // Workflows
 // $ gulp: Builds and watches for changes. The works.
-var defaultTask = gulp.parallel(styles, scripts, sprites, watch);
+const defaultTask = gulp.parallel(styles, scripts, sprites, watch);
 
 // $ gulp build: Builds for deployments.
-var buildTask = gulp.parallel(styles, scripts, sprites);
+const buildTask = gulp.parallel(styles, scripts, sprites);
 
 // Exports
 // Externalise individual tasks.
