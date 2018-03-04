@@ -28,6 +28,7 @@ const processors = [
 	require('postcss-custom-properties'),
 	require('css-mqpacker')({sort: true}),
 	require('autoprefixer'),
+	require('postcss-normalize'),
 	require('cssnano')({autoprefixer: false, reduceIdents: false}) // Autoprefixer has just been run, don't do it again; reduceIdents is pretty unsafe.
 ];
 
