@@ -1,9 +1,9 @@
 'use strict';
 
 /* Global Variables */
-var get_url = 'https://api.scottsmith.is/v1.1/responses'
-var post_url = 'https://api.scottsmith.is/v1.1/responses'
-var response_json
+const get_url = 'http://dev-api.scottsmith.is/v1.1/responses'
+const post_url = 'http://dev-api.scottsmith.is/v1.1/responses'
+var response_json 
 
 /* Page Elements */
 var mainElement = document.querySelector('main');
@@ -168,9 +168,10 @@ var helpText = document.querySelector('.help-text');
 		form.reset();
 	}
 
-	function load_responses(url) {
+	function load_responses(url, limit = 100) {
+		var req_url = url + '?limit=' + limit
 		var httpRequest = new XMLHttpRequest();
-		httpRequest.open('GET', url, true);
+		httpRequest.open('GET', req_url, true);
 		httpRequest.send();
 		httpRequest.onload = function(e) {
 			response_json = JSON.parse(httpRequest.responseText);
