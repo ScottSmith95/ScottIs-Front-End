@@ -4,7 +4,10 @@ const gulp       = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const postcss    = require('gulp-postcss');
 const concat     = require('gulp-concat');
-const uglify     = require('gulp-uglify');
+// Use uglify-es minifier with gulp-uglify for ES2015 support.
+const composer   = require('gulp-uglify/composer');
+const uglifyes   = require('uglify-es');
+const minify     = composer(uglifyes, console);
 const sprite     = require('gulp-svg-sprite');
 
 const paths = {
@@ -44,7 +47,7 @@ function scripts() {
 	return gulp.src(paths.scripts.src)
 		.pipe(sourcemaps.init())
 			.pipe(concat('app.js'))
-			.pipe(uglify())
+			.pipe(minify())
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(paths.scripts.dest));
 }
