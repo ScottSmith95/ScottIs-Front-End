@@ -1,20 +1,20 @@
 {
   "name": "ScottSmith.is",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "What do people really think about you?",
+  "author": "Scott Smith",
+  "homepage": "https://scottsmith.is",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ScottSmith95/ScottIs-Front-End.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ScottSmith95/ScottSmith.is/issues"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ScottSmith905/ScottSmith.is"
-  },
-  "author": "Scott Smith",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ScottSmith905/ScottSmith.is/issues"
-  },
-  "homepage": "https://scottsmith.is",
   "devDependencies": {
     "autoprefixer": "^8.1.0",
     "boomsvgloader": "0.0.2",
