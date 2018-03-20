@@ -1,8 +1,8 @@
 'use strict';
 
 /* Global Variables */
-const get_url = 'http://dev-api.scottsmith.is/v1.1/responses'
-const post_url = 'http://dev-api.scottsmith.is/v1.1/responses'
+const get_url = 'https://api.scottsmith.is/v1.2/responses'
+const post_url = 'https://api.scottsmith.is/v1.2/responses'
 var response_json 
 
 /* Page Elements */
