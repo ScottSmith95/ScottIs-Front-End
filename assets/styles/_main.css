@@ -43,21 +43,21 @@ main {
 	color: var(--offwhite);
 	padding: 0 0.35em;
 
-	&.size1 {
+	&.size-1 {
 		font-size: 1.2em;
 	}
 
-	&.size2 {
+	&.size-2 {
 		font-size: 1.4em;
 		opacity: 0.75;
 	}
 
-	&.size3 {
+	&.size-3 {
 		font-size: 1.6em;
 		opacity: 0.75;
 	}
 
-	&.size4 {
+	&.size-4 {
 		font-size: 1.8em;
 	}
 }

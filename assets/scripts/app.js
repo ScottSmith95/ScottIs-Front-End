@@ -106,14 +106,14 @@ const ScottIs = {
 	},
 
 	getRandomIntInclusive( min, max ) {
-		min = Math.ceil( min );
-		max = Math.floor( max );
-		return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+		const low = Math.ceil( min );
+		const high = Math.floor( max );
+		return Math.floor( Math.random() * ( high - low + 1 ) ) + low;
 	},
 
 	word_cloud( el ) {
 		const mod = this.getRandomIntInclusive( 1, 4 );
-		el.classList.add( 'size' + mod );
+		el.classList.add( `size-${ mod }` );
 	},
 
 	serialize( form ) {
