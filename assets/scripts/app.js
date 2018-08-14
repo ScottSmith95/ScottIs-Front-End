@@ -1,17 +1,17 @@
 'use strict';
 
 /* Global Variables */
-const get_url = 'https://api.scottsmith.is/v1.2/responses'
-const post_url = 'https://api.scottsmith.is/v1.2/responses'
-var response_json 
+/* global boomsvgloader:false */
+const get_url = 'https://api.scottsmith.is/v1.2/responses';
+const post_url = 'https://api.scottsmith.is/v1.2/responses';
+let response_json;
 
 /* Page Elements */
-var mainElement = document.querySelector('main');
-var responseForm = document.querySelector('.input-form');
-var textInput = document.querySelector('.input-form input[type="text"]');
-var submitButton = document.querySelector('.input-form input[type="submit"]');
-var helpButton = document.querySelector('header .help');
-var helpText = document.querySelector('.help-text');
+const mainElement = document.querySelector( 'main' );
+const responseForm = document.querySelector( '.input-form' );
+const textInput = document.querySelector( '.input-form input[type="text"]' );
+const helpButton = document.querySelector( 'header .help' );
+const helpText = document.querySelector( '.help-text' );
 
 /* Alerts Module */
 class Alert {
@@ -82,125 +82,124 @@ class Alert {
 /* Client Module */
 const ScottIs = {
 
-	layout(responses) {
+	layout( responses ) {
 		// Add Response container to DOM.
-		var response_container = document.querySelector('.responses');
-		if (response_container) {
+		let response_container = document.querySelector( '.responses' );
+		if ( response_container ) {
 			response_container.remove();
 		}
-		var response_container_html = "<ul class='responses'></ul>"
-		mainElement.insertAdjacentHTML('beforeend', response_container_html);
+		const response_container_element = document.createElement( 'ul' );
+		response_container_element.classList.add( 'responses' );
+		mainElement.insertAdjacentElement( 'beforeend', response_container_element );
 		// Redefine element after removal.
-		response_container = document.querySelector('.responses');
-
-		var response_number = Object.keys(responses).length
+		response_container = document.querySelector( '.responses' );
 
 		// Position each response with a random position.
-		for (var r in responses) {
-			// Add content divs
-			var response_html = "<li class='response' id='" + r + "'>" + responses[r] + "</li>";
-			response_container.insertAdjacentHTML('afterbegin', response_html);
-			var el = document.getElementById(r);
-			word_cloud(el);
+		for ( let r in responses ) {
+			if ( Object.prototype.hasOwnProperty.call( responses, r ) ) {
+				// Add content divs
+				const response_html = `<li class="response" id="${ r }">${ responses[ r ] }</li>`;
+				response_container.insertAdjacentHTML( 'afterbegin', response_html );
+				this.word_cloud( document.getElementById( r ) );
+			}
 		}
 	},
 
-	getRandomIntInclusive(min, max) {
-	  min = Math.ceil(min);
-	  max = Math.floor(max);
-	  return Math.floor(Math.random() * (max - min + 1)) + min;
+	getRandomIntInclusive( min, max ) {
+		min = Math.ceil( min );
+		max = Math.floor( max );
+		return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
 	},
 
-	word_cloud(el) {
-		var mod = getRandomIntInclusive(1, 4)
-		el.classList.add('size' + mod);
+	word_cloud( el ) {
+		const mod = this.getRandomIntInclusive( 1, 4 );
+		el.classList.add( 'size' + mod );
 	},
-	
+
 	serialize( form ) {
 		// Source: https://stackoverflow.com/a/44033425/1867887
 		return new URLSearchParams( new FormData( form ) ).toString();
 	},
 
-	handle_form(event) {
-		event = event || window.event;
+	/*
+	 *  This function is called with the event scope and thus needs to reference
+	 *  other functions in the object as 'ScottIs.func()' instead of 'this.func()'.
+	 */
+	handle_form( event ) {
 		event.preventDefault();
-		var targ = event.target || event.srcElement || null;
-		var form = targ;
-		if (textInput.value.length > 20) {
-			Alerts.make_alert("Try to keep responses under 20 chars. 😅", 'failure');
-			return false
+		if ( textInput.value.length > 20 ) {
+			Alert.make_alert( "Try to keep responses under 20 chars. 😅", 'failure' );
+			return false;
 		}
-		if (textInput.value.length == 0) {
-			Alerts.make_alert("You've gotta actually have something to say. 😒", 'failure');
-			return false
+		if ( textInput.value.length == 0 ) {
+			Alert.make_alert( "You've gotta actually have something to say. 😒", 'failure' );
+			return false;
 		}
-		
-// 		var data = new FormData(form);
-		var data = ScottIs.serialize(form, event, targ);
-		
-		ScottIs.send_response(post_url, data);
-		form.reset();
+
+		const data = ScottIs.serialize( responseForm );
+
+		ScottIs.send_response( post_url, data );
+		responseForm.reset();
 	},
 
-	load_responses(url, limit = 100) {
-		var req_url = url + '?limit=' + limit
-		var httpRequest = new XMLHttpRequest();
-		httpRequest.open('GET', req_url, true);
+	load_responses( url, limit = 100 ) {
+		const req_url = `${ url }?limit=${ limit }`;
+		const httpRequest = new XMLHttpRequest();
+		httpRequest.open( 'GET', req_url, true );
 		httpRequest.send();
-		httpRequest.onload = function(e) {
-			response_json = JSON.parse(httpRequest.responseText);
-			scottis.layout(response_json);
+		httpRequest.onload = () => {
+			response_json = JSON.parse( httpRequest.responseText );
+			this.layout( response_json );
 		};
 	},
 
-	send_response(url, data) {
-		var httpRequest = new XMLHttpRequest();
-		httpRequest.open('POST', url, true);
-		httpRequest.onreadystatechange = function() {
-			after_response(httpRequest)
+	send_response( url, data ) {
+		const httpRequest = new XMLHttpRequest();
+		httpRequest.open( 'POST', url, true );
+		httpRequest.onreadystatechange = () => {
+			this.after_response( httpRequest );
 		};
-		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-		httpRequest.send(data)
+		httpRequest.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8' );
+		httpRequest.send( data );
 	},
 
-	after_response(httpRequest) {
-		if (httpRequest.readyState === XMLHttpRequest.DONE) {
-			if (httpRequest.status === 200) {
-				Alerts.make_alert("Success! Message posted. 👍", 'success');
-				load_responses(get_url)
-			} else if (httpRequest.status === 202) {
-				Alerts.make_alert("Uh oh! That is a duplicate response. Try coming up with something new!", 'failure');
+	after_response( httpRequest ) {
+		if ( httpRequest.readyState === XMLHttpRequest.DONE ) {
+			if ( httpRequest.status === 200 ) {
+				Alert.make_alert( "Success! Message posted. 👍", 'success' );
+				this.load_responses( get_url );
+			} else if ( httpRequest.status === 202 ) {
+				Alert.make_alert( "Uh oh! That is a duplicate response. Try coming up with something new!", 'failure' );
 			} else {
-				Alerts.make_alert("Uh small problem. Tell me about it. 😕", 'failure');
-				console.log('There was a problem with the request.');
+				Alert.make_alert( "Uh small problem. Tell me about it. 😕", 'failure' );
+				console.error( 'There was a problem with the request.' );
 			}
 		}
 	},
 
-	help_button(event) {
-		event = event || window.event;
+	help_button( event ) {
 		event.preventDefault();
-		helpButton.classList.toggle('visible');
-		helpText.classList.toggle('hidden');
-		helpText.classList.toggle('visible');
+		helpButton.classList.toggle( 'visible' );
+		helpText.classList.toggle( 'hidden' );
+		helpText.classList.toggle( 'visible' );
 	},
 
 	help_setup() {
-		if (window.location.hash == '#help') {
-			helpButton.classList.toggle('visible');
-			helpText.classList.remove('hidden');
+		if ( window.location.hash == '#help' ) {
+			helpButton.classList.toggle( 'visible' );
+			helpText.classList.remove( 'hidden' );
 		}
 	}
 };
 
 /* Client Actions */
 try {
-	boomsvgloader.load('/assets/images/icons/icon-sprite.svg');
-} catch (e) {
-	console.log(e)
+	boomsvgloader.load( '/assets/images/icons/icon-sprite.svg' );
+} catch ( error ) {
+	console.error( error );
 }
 
-ScottIs.load_responses(get_url);
-responseForm.addEventListener('submit', ScottIs.handle_form);
+ScottIs.load_responses( get_url );
+responseForm.addEventListener( 'submit', ScottIs.handle_form );
 ScottIs.help_setup();
-helpButton.addEventListener('click', ScottIs.help_button);
+helpButton.addEventListener( 'click', ScottIs.help_button );
