@@ -22,6 +22,8 @@ main {
 .responses {
 	text-align: center;
 	padding-left: 0;
+	padding-bottom: 1.25em;
+	padding-bottom: calc(1.25em + env(safe-area-inset-bottom));
 	margin: 1.25em auto 0;
 
   @media (min-width: 35em) {
