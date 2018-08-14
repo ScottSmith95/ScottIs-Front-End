@@ -2,9 +2,18 @@
 
 /* Global Variables */
 /* global boomsvgloader:false */
-const get_url = 'https://api.scottsmith.is/v1.2/responses';
-const post_url = 'https://api.scottsmith.is/v1.2/responses';
+
+let get_url;
+let post_url;
 let response_json;
+
+if ( location.hostname.includes( 'dev' ) ) {
+	get_url = 'https://dev-api.scottsmith.is/v1.2/responses';
+	post_url = 'https://dev-api.scottsmith.is/v1.2/responses';
+} else { 
+	get_url = 'https://api.scottsmith.is/v1.2/responses';
+	post_url = 'https://api.scottsmith.is/v1.2/responses';
+}
 
 /* Page Elements */
 const mainElement = document.querySelector( 'main' );
