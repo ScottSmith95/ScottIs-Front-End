@@ -128,7 +128,7 @@ const ScottIs = {
 	handle_form( event ) {
 		event.preventDefault();
 		if ( textInput.value.length > 20 ) {
-			Alert.make_alert( "Try to keep responses under 20 chars. 😅", 'failure' );
+			Alert.make_alert( 'Try to keep responses under 20 chars. 😅', 'failure' );
 			return false;
 		}
 		if ( textInput.value.length == 0 ) {
@@ -166,12 +166,12 @@ const ScottIs = {
 	after_response( httpRequest ) {
 		if ( httpRequest.readyState === XMLHttpRequest.DONE ) {
 			if ( httpRequest.status === 200 ) {
-				Alert.make_alert( "Success! Message posted. 👍", 'success' );
+				Alert.make_alert( 'Success! Message posted. 👍', 'success' );
 				this.load_responses( get_url );
 			} else if ( httpRequest.status === 202 ) {
-				Alert.make_alert( "Uh oh! That is a duplicate response. Try coming up with something new!", 'failure' );
+				Alert.make_alert( 'Uh oh! That is a duplicate response. Try coming up with something new!', 'failure' );
 			} else {
-				Alert.make_alert( "Uh small problem. Tell me about it. 😕", 'failure' );
+				Alert.make_alert( 'Uh small problem. Tell me about it. 😕', 'failure' );
 				console.error( 'There was a problem with the request.' );
 			}
 		}
