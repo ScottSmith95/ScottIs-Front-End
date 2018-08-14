@@ -8,18 +8,19 @@
     "type": "git",
     "url": "https://github.com/ScottSmith95/ScottIs-Front-End.git"
   },
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/ScottSmith95/ScottSmith.is/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint --ignore-path .gitignore ./"
   },
   "devDependencies": {
     "autoprefixer": "^8.1.0",
     "boomsvgloader": "0.0.2",
     "css-mqpacker": "^6.0.2",
     "cssnano": "^3.10.0",
+    "eslint": "^5.3.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-postcss": "^7.0.1",
