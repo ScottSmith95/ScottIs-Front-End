@@ -3,17 +3,18 @@
 /* Global Variables */
 /* global boomsvgloader:false */
 
-let get_url;
-let post_url;
-let response_json;
+const api_version = '1.3';
+let api_domain;
 
 if ( location.hostname.includes( 'dev' ) ) {
-	get_url = 'https://dev-api.scottsmith.is/v1.2/responses';
-	post_url = 'https://dev-api.scottsmith.is/v1.2/responses';
+	api_domain = 'dev-api.scottsmith.is';
 } else { 
-	get_url = 'https://api.scottsmith.is/v1.2/responses';
-	post_url = 'https://api.scottsmith.is/v1.2/responses';
+	api_domain = 'api.scottsmith.is';
 }
+
+const get_url = `https://${ api_domain }/v${ api_version }/responses`;
+const post_url = `https://${ api_domain }/v${ api_version }/responses`;
+let response_json;
 
 /* Page Elements */
 const mainElement = document.querySelector( 'main' );
