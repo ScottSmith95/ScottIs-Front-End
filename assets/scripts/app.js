@@ -13,6 +13,72 @@ var submitButton = document.querySelector('.input-form input[type="submit"]');
 var helpButton = document.querySelector('header .help');
 var helpText = document.querySelector('.help-text');
 
+/* Alerts Module */
+class Alert {
+	constructor( message, type = 'neutral', duration = 4000 ) {
+		this.constructor.make_alert( message, type, duration );
+	}
+
+	static make_alert( message, type = 'neutral', duration = 4000 ) {
+		return new Promise( resolve => {
+			// Check for and remove any preexisting alerts.
+			if ( document.querySelector( '[role=alert]' ) ) {
+				const oldAlert = document.querySelector( '[role=alert]' );
+				const oldAlertId = oldAlert.getAttribute( 'id' ).replace( 'alert-', '' );
+				this.remove_alert( oldAlertId, true );
+			}
+
+			// Create alert element.
+			const alertEl = this.create_alert_element( message, type );
+
+			// Remove alert after duration.
+			const alertTimeoutId = window.setTimeout( () => {
+				this.remove_alert( alertTimeoutId );
+				resolve();
+			}, duration );
+
+			// Save alert ID (timeout ID counter) as element id.
+			alertEl.setAttribute( 'id', `alert-${ alertTimeoutId }` );
+
+			// Allow user to dismiss alert by clicking.
+			alertEl.addEventListener( 'click', () => {
+				this.remove_alert( alertTimeoutId );
+				resolve();
+			}, false );
+		} );
+	}
+
+	static create_alert_element( message, type ) {
+		const alertEl = document.createElement( 'div' );
+		alertEl.setAttribute( 'role', 'alert' );
+		alertEl.setAttribute( 'aria-live', 'assertive' );
+		alertEl.classList.add( 'status', type );
+		const textEl = document.createElement( 'p' );
+		textEl.textContent = message;
+		alertEl.appendChild( textEl );
+		responseForm.insertAdjacentElement( 'afterend', alertEl );
+
+		return alertEl;
+	}
+
+	static remove_alert( timeout, instant = false ) {
+		window.clearTimeout( timeout );
+		const alertEl = document.getElementById( `alert-${ timeout }` );
+
+		if ( alertEl && instant === false ) {
+			alertEl.classList.add( 'remove' );
+
+			setTimeout( () => {
+				alertEl.remove();
+			}, 1000 );
+		}
+
+		if ( alertEl && instant === true ) {
+			alertEl.remove();
+		}
+	}
+}
+
 /* Client Module */
 (function(root, factory) {
 	if (typeof define === 'function' && define.amd) {
@@ -60,41 +126,6 @@ var helpText = document.querySelector('.help-text');
 	function word_cloud(el) {
 		var mod = getRandomIntInclusive(1, 4)
 		el.classList.add('size' + mod);
-	}
-
-	function make_alert(text, type, duration) {
-		if (type === undefined) {
-				type = 'neutral';
-		}
-		if (duration === undefined) {
-				duration = 4000;
-		}
-
-		if (document.getElementById('status')) {
-			var statusEl = document.getElementById('status');
-			statusEl.className = '';
-			statusEl.classList.add('status', type)
-			statusEl.innerHTML = text
-		} else {
-			var alert_html = "<div id='status' class='status " + type + "' role='alert' aria-live='assertive'><p>"
-				+ text
-				+ "</p></div>";
-			responseForm.insertAdjacentHTML('afterend', alert_html);
-		}
-
-		// Remove alert after 3s.
-		setTimeout(function() {
-			remove_alert();
-		}, duration);
-	}
-
-	function remove_alert() {
-		var statusEl = document.getElementById('status');
-		statusEl.classList.add('remove');
-
-		setTimeout(function() {
-			statusEl.remove();
-		}, 1000);
 	}
 	
 	function serialize(form, evt, targ) {
@@ -153,11 +184,11 @@ var helpText = document.querySelector('.help-text');
 		var targ = event.target || event.srcElement || null;
 		var form = targ;
 		if (textInput.value.length > 20) {
-			scottis.make_alert("Try to keep responses under 20 chars. 😅", 'failure');
+			Alerts.make_alert("Try to keep responses under 20 chars. 😅", 'failure');
 			return false
 		}
 		if (textInput.value.length == 0) {
-			scottis.make_alert("You've gotta actually have something to say. 😒", 'failure');
+			Alerts.make_alert("You've gotta actually have something to say. 😒", 'failure');
 			return false
 		}
 		
@@ -192,12 +223,12 @@ var helpText = document.querySelector('.help-text');
 	function after_response(httpRequest) {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			if (httpRequest.status === 200) {
-				scottis.make_alert("Success! Message posted. 👍", 'success');
+				Alerts.make_alert("Success! Message posted. 👍", 'success');
 				load_responses(get_url)
 			} else if (httpRequest.status === 202) {
-				scottis.make_alert("Uh oh! That is a duplicate response. Try coming up with something new!", 'failure');
+				Alerts.make_alert("Uh oh! That is a duplicate response. Try coming up with something new!", 'failure');
 			} else {
-				scottis.make_alert("Uh small problem. Tell me about it. 😕", 'failure');
+				Alerts.make_alert("Uh small problem. Tell me about it. 😕", 'failure');
 				console.log('There was a problem with the request.');
 			}
 		}
@@ -220,7 +251,6 @@ var helpText = document.querySelector('.help-text');
 
 	return {
 		layout: layout,
-		make_alert: make_alert,
 		handle_form: handle_form,
 		load_responses: load_responses,
 		send_response: send_response,
