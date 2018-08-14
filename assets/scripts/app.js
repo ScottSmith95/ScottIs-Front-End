@@ -116,54 +116,9 @@ const ScottIs = {
 		el.classList.add('size' + mod);
 	},
 	
-	serialize(form, evt, targ) {
-		// Source: http://stackoverflow.com/a/42494626/1867887
-		if (typeof(form) !== 'object' && form.nodeName !== "FORM")
-			return '';
-		
-		var field, query = '';
-		
-		var encode = function(field, name) {
-			if (field.disabled) return '';
-		
-			return '&' + (name || field.name) + '=' +
-				encodeURIComponent(field.value).replace(/%20/g,'+');
-		}
-		
-		// Fields without names can't be serialized.
-		var hasName = function(el) {
-			return (el.name && el.name.length > 0)
-		}
-		
-		var ignorableField = function(el, evt) {
-			return ((el.type == 'file' || el.type == 'reset')
-				|| ((el.type == 'submit' || el.type == 'button') && evt.target != el)
-				|| ((el.type == 'checkbox' || el.type == 'radio') && !el.checked))
-		}
-		
-		var parseMultiSelect = function(field) {
-			var q = '';
-			
-			for (var j=field.options.length-1; j>=0; j--) {
-				if (field.options[j].selected) {
-					q += encode(field.options[j], field.name);
-				}
-			}
-			
-			return q;
-		};
-		
-		for (var i = form.elements.length - 1; i >= 0; i--) {
-			field = form.elements[i];
-			
-			if (!hasName(field) || field.value == '' || ignorableField(field, evt))
-				continue;
-			
-			query += (field.type == 'select-multiple') ? parseMultiSelect(field)
-				: encode(field);
-		}
-			
-		return (query.length == 0) ? '' : query.substr(1);
+	serialize( form ) {
+		// Source: https://stackoverflow.com/a/44033425/1867887
+		return new URLSearchParams( new FormData( form ) ).toString();
 	},
 
 	handle_form(event) {
