@@ -1,16 +1,16 @@
 {
-  "name": "scottsmith.is",
+  "name": "scottsmith.is-app",
   "version": "1.0.0",
   "description": "What do people really think about you?",
   "author": "Scott Smith",
+  "license": "UNLICENSED",
   "homepage": "https://scottsmith.is",
   "repository": {
     "type": "git",
     "url": "https://github.com/ScottSmith95/ScottIs-Front-End.git"
   },
-  "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/ScottSmith95/ScottSmith.is/issues"
+    "url": "https://github.com/ScottSmith95/ScottIs-Front-End/issues"
   },
   "scripts": {
     "test": "eslint --ignore-path .gitignore ./"
