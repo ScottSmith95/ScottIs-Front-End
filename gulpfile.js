@@ -13,7 +13,8 @@ const sprite     = require( 'gulp-svg-sprite' );
 const paths = {
 	styles: {
 		src: 'assets/styles/app.css',
-		dest: 'assets/styles/build/'
+		dest: 'assets/styles/build/',
+		watch: [ 'assets/styles/**/*.css', '!assets/styles/build/**' ]
 	},
 	scripts: {
 		src: [ 'node_modules/boomsvgloader/dist/js/boomsvgloader.js', 'assets/scripts/*.js', '!assets/scripts/build/**' ],
@@ -69,7 +70,7 @@ function sprites() {
 }
 
 function watch() {
-	gulp.watch( paths.styles.src, styles );
+	gulp.watch( paths.styles.watch, styles );
 	gulp.watch( paths.scripts.src, scripts );
 	gulp.watch( paths.sprites.src, sprites );
 }

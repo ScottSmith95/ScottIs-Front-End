@@ -1,8 +1,7 @@
-@import-normalize;
-@import 'variables.css';
+@import '_variables.css';
 
-@import 'global.css';
-@import 'header.css';
-@import 'main.css';
-@import 'form.css';
-@import 'help.css';
+@import '_global.css';
+@import '_header.css';
+@import '_main.css';
+@import '_form.css';
+@import '_help.css';
