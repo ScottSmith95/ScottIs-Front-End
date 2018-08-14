@@ -80,21 +80,9 @@ class Alert {
 }
 
 /* Client Module */
-(function(root, factory) {
-	if (typeof define === 'function' && define.amd) {
-	// AMD
-	define(['scottis'], factory);
-	} else if (typeof exports === 'object') {
-	// Node, CommonJS-like
-	module.exports = factory();
-	} else {
-	// Browser globals (root is window)
-	root.scottis = factory();
-	}
-}(this, function() {
-	'use strict';
+const ScottIs = {
 
-	function layout(responses) {
+	layout(responses) {
 		// Add Response container to DOM.
 		var response_container = document.querySelector('.responses');
 		if (response_container) {
@@ -115,20 +103,20 @@ class Alert {
 			var el = document.getElementById(r);
 			word_cloud(el);
 		}
-	}
+	},
 
-	function getRandomIntInclusive(min, max) {
+	getRandomIntInclusive(min, max) {
 	  min = Math.ceil(min);
 	  max = Math.floor(max);
 	  return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
+	},
 
-	function word_cloud(el) {
+	word_cloud(el) {
 		var mod = getRandomIntInclusive(1, 4)
 		el.classList.add('size' + mod);
-	}
+	},
 	
-	function serialize(form, evt, targ) {
+	serialize(form, evt, targ) {
 		// Source: http://stackoverflow.com/a/42494626/1867887
 		if (typeof(form) !== 'object' && form.nodeName !== "FORM")
 			return '';
@@ -176,9 +164,9 @@ class Alert {
 		}
 			
 		return (query.length == 0) ? '' : query.substr(1);
-	}
+	},
 
-	function handle_form(event) {
+	handle_form(event) {
 		event = event || window.event;
 		event.preventDefault();
 		var targ = event.target || event.srcElement || null;
@@ -193,13 +181,13 @@ class Alert {
 		}
 		
 // 		var data = new FormData(form);
-		var data = serialize(form, event, targ);
+		var data = ScottIs.serialize(form, event, targ);
 		
-		scottis.send_response(post_url, data);
+		ScottIs.send_response(post_url, data);
 		form.reset();
-	}
+	},
 
-	function load_responses(url, limit = 100) {
+	load_responses(url, limit = 100) {
 		var req_url = url + '?limit=' + limit
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.open('GET', req_url, true);
@@ -208,9 +196,9 @@ class Alert {
 			response_json = JSON.parse(httpRequest.responseText);
 			scottis.layout(response_json);
 		};
-	}
+	},
 
-	function send_response(url, data) {
+	send_response(url, data) {
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.open('POST', url, true);
 		httpRequest.onreadystatechange = function() {
@@ -218,9 +206,9 @@ class Alert {
 		};
 		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 		httpRequest.send(data)
-	}
+	},
 
-	function after_response(httpRequest) {
+	after_response(httpRequest) {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			if (httpRequest.status === 200) {
 				Alerts.make_alert("Success! Message posted. 👍", 'success');
@@ -232,32 +220,23 @@ class Alert {
 				console.log('There was a problem with the request.');
 			}
 		}
-	}
+	},
 
-	function help_button(event) {
+	help_button(event) {
 		event = event || window.event;
 		event.preventDefault();
 		helpButton.classList.toggle('visible');
 		helpText.classList.toggle('hidden');
 		helpText.classList.toggle('visible');
-	}
+	},
 
-	function help_setup() {
+	help_setup() {
 		if (window.location.hash == '#help') {
 			helpButton.classList.toggle('visible');
 			helpText.classList.remove('hidden');
 		}
 	}
-
-	return {
-		layout: layout,
-		handle_form: handle_form,
-		load_responses: load_responses,
-		send_response: send_response,
-		help_button: help_button,
-		help_setup: help_setup
-	};
-}));
+};
 
 /* Client Actions */
 try {
@@ -266,7 +245,7 @@ try {
 	console.log(e)
 }
 
-scottis.load_responses(get_url);
-responseForm.addEventListener('submit', scottis.handle_form);
-scottis.help_setup();
-helpButton.addEventListener('click', scottis.help_button);
+ScottIs.load_responses(get_url);
+responseForm.addEventListener('submit', ScottIs.handle_form);
+ScottIs.help_setup();
+helpButton.addEventListener('click', ScottIs.help_button);
