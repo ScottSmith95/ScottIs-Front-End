@@ -63,6 +63,7 @@ class Alert {
 		alertEl.setAttribute( 'role', 'alert' );
 		alertEl.setAttribute( 'aria-live', 'assertive' );
 		alertEl.classList.add( 'status', type );
+		alertEl.style.cursor = 'pointer';
 		const textEl = document.createElement( 'p' );
 		textEl.textContent = message;
 		alertEl.appendChild( textEl );
