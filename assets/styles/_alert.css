@@ -7,17 +7,19 @@
 	text-align: center;
 	padding: 1.25rem;
 	margin: 1.25rem auto;
-	box-shadow: 0 3px 50px rgba(255, 255, 255, 0.3);
+	box-shadow: 0 5px 50px rgba(255, 255, 255, 0.3);
 
 	&.success {
 		/* Emma's seafoam green. */
 		background-color: #48C9B0;
-		color: var(--offwhite);
+		color: var(--text-color);
+		box-shadow: 0 5px 50px rgba(73, 202, 177, 0.3);
 	}
 
 	&.failure {
 		background-color: #DB4A30;
-		color: var(--offwhite);
+		color: var(--text-color);
+		box-shadow: 0 5px 50px rgba(220, 75, 49, 0.3);
 	}
 
 	&.remove {
