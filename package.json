@@ -12,6 +12,9 @@
   "bugs": {
     "url": "https://github.com/ScottSmith95/ScottIs-Front-End/issues"
   },
+  "engines": {
+    "node": "^10.13.0"
+  },
   "scripts": {
     "test": "eslint --ignore-path .gitignore ./",
     "build": "gulp build",
@@ -39,5 +42,8 @@
     "last 2 versions",
     "> 5% in US",
     "Firefox ESR"
-  ]
+  ],
+  "dependencies": {
+    "gulp-cli": "^2.2.0"
+  }
 }
