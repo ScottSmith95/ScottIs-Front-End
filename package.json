@@ -18,7 +18,8 @@
   "scripts": {
     "test": "eslint --ignore-path .gitignore ./",
     "build": "gulp build",
-    "now-build": "if [ -d node_modules ]; then rm -rf ./node_modules; fi && npm i gulp-cli && npm run build"
+    "create-dist": "if [ -d dist ]; then rm -rf ./dist; fi && mkdir -p dist && rsync -rR {index.html,./assets/} dist",
+    "now-build": "npm i gulp-cli && npm run build"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.0",
