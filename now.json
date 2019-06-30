@@ -1,0 +1,20 @@
+{
+	"name": "ScottSmith.is",
+	"alias": [
+		"scottsmith.is",
+		"www.scottsmith.is"
+	],
+	"version": 2,
+	"builds": [
+		{
+			"src": "package.json",
+			"use": "@now/static-build",
+			"config": {
+				"distDir": "/"
+			}
+		}
+	],
+	"github": {
+		"silent": true
+	}
+}
