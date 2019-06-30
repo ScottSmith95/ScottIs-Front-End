@@ -2,5 +2,4 @@
 node_modules/
 bower_components/
 
-assets/styles/build/
-assets/scripts/build/
+assets/**/build/
