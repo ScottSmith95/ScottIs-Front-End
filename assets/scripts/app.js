@@ -3,12 +3,12 @@
 /* Global Variables */
 /* global boomsvgloader:false */
 
-const api_version = '1.3';
+const api_version = '1.4';
 let api_domain;
 
 if ( location.hostname.includes( 'dev' ) ) {
 	api_domain = 'dev-api.scottsmith.is';
-} else { 
+} else {
 	api_domain = 'api.scottsmith.is';
 }
 
