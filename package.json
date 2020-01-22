@@ -22,11 +22,11 @@
     "now-build": "npm i gulp-cli && npm run build && npm run create-dist"
   },
   "devDependencies": {
-    "autoprefixer": "^9.7.1",
+    "autoprefixer": "^9.7.4",
     "boomsvgloader": "0.0.2",
     "css-mqpacker": "^7.0.0",
     "cssnano": "^4.1.10",
-    "eslint": "^6.6.0",
+    "eslint": "^6.8.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^8.0.0",
@@ -37,7 +37,7 @@
     "postcss-import": "^12.0.1",
     "postcss-nested": "^4.2.1",
     "postcss-normalize": "^8.0.1",
-    "terser": "^4.3.9"
+    "terser": "^4.6.3"
   },
   "browserslist": [
     "last 2 versions",
