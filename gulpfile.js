@@ -1,7 +1,6 @@
 'use strict';
 
 const gulp       = require( 'gulp' );
-const sourcemaps = require( 'gulp-sourcemaps' );
 const postcss    = require( 'gulp-postcss' );
 const concat     = require( 'gulp-concat' );
 // Use terser minifier with gulp-uglify for ES2015 support.
@@ -37,20 +36,18 @@ const processors = [
 ];
 
 function styles() {
-	return gulp.src( paths.styles.src )
-		.pipe( sourcemaps.init() )
-			.pipe( postcss( processors ) )
-		.pipe( sourcemaps.write( './' ) )
-		.pipe( gulp.dest( paths.styles.dest ) );
+	return gulp
+		.src( paths.styles.src, { sourcemaps: true } )
+		.pipe( postcss( processors ) )
+		.pipe( gulp.dest( paths.styles.dest, { sourcemaps: '.' } ) );
 }
 
 function scripts() {
-	return gulp.src( paths.scripts.src )
-		.pipe( sourcemaps.init() )
-			.pipe( concat( 'app.js' ) )
-			.pipe( minify() )
-		.pipe( sourcemaps.write( './' ) )
-		.pipe( gulp.dest( paths.scripts.dest ) );
+	return gulp
+		.src( paths.scripts.src, { sourcemaps: true } )
+		.pipe( concat( 'app.js' ) )
+		.pipe( minify() )
+		.pipe( gulp.dest( paths.scripts.dest, { sourcemaps: '.' } ) );
 }
 
 function sprites() {
@@ -64,7 +61,8 @@ function sprites() {
 		}
 	};
 
-	return gulp.src( paths.sprites.src )
+	return gulp
+		.src( paths.sprites.src )
 		.pipe( sprite( options ) )
 		.pipe( gulp.dest( paths.sprites.dest ) );
 }
