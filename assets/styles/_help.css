@@ -11,7 +11,7 @@
   transition: min-height 0.35s ease, max-height 0.35s ease, margin-top 0.35s ease, margin-bottom 0.35s ease, padding-top 0.35s ease, padding-bottom 0.35s ease;
   display: flex;
   position: fixed;
-  padding-top: 3rem;
+  padding-top: 4.5rem;
   left: 0;
   right: 0;
   bottom: 0;
