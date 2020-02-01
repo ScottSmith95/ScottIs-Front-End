@@ -12,8 +12,7 @@
   display: flex;
   position: fixed;
   padding-top: 4.5rem;
-  left: 0;
-  right: 0;
+  height: 100vh;
   bottom: 0;
   z-index: 1;
   overflow: hidden;
