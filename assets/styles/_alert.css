@@ -2,7 +2,7 @@
 	animation: add-alert 0.35s ease-out backwards;
 	max-width: 45rem;
 	background-color: #EDEDED;
-	color: var(--darkgrey);
+	color: var(--text-color-dark);
 	font-family: monospace;
 	text-align: center;
 	padding: 1.25rem;
@@ -12,13 +12,13 @@
 	&.success {
 		/* Emma's seafoam green. */
 		background-color: #48C9B0;
-		color: var(--text-color);
+		color: var(--text-color-dark);
 		box-shadow: 0 5px 50px rgba(73, 202, 177, 0.3);
 	}
 
 	&.failure {
 		background-color: #DB4A30;
-		color: var(--text-color);
+		color: var(--text-color-light);
 		box-shadow: 0 5px 50px rgba(220, 75, 49, 0.3);
 	}
 

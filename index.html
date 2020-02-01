@@ -35,7 +35,7 @@ __    / /  | |     __   | |     | |    | |       | |
 <link rel="mask-icon" href="/assets/images/favicons/favicon.svg" color="#167EDA">
 
 <!-- CSS -->
-<link rel="stylesheet" href="/assets/styles/build/app.css?v1.3">
+<link rel="stylesheet" href="/assets/styles/build/app.css?v1.4">
 
 <!-- Typekit -->
 <link rel="stylesheet" href="https://use.typekit.net/elq1qbu.css">
@@ -47,19 +47,26 @@ __    / /  | |     __   | |     | |    | |       | |
 			<svg viewbox="0 0 50 50">
 				<use xlink:href="#slash">
 			</svg>
-			<span>ScottHSmith.com</span>
+			<span class="sr-only">ScottHSmith.com</span>
 		</a>
 
 		<a href="#help" class="help">
-			<svg viewbox="0 0 50 50">
-				<use xlink:href="#helpicon">
-			</svg>
+			What is this?
 		</a>
 	</header>
 
-  <p id="help" class="help-text hidden">
-    What do people think about you? We've all asked ourselves this question at some time or another. While in an ideal situation we learn we don't need to know the answer (just be yourself), I decided to take a stab at actually learning what people think of me. That's what this is, in case you were wondering. Now, an anonymous answer box seems obvious but I wanted to take it farther. Punching in a nice response or finding the perfect words to tear me apart only to hit send and have it whisked away into the ether isn't a very engaging experience. There's no incentive for people to submit a response if it appears to be unseen. So I'm displaying random responses for anyone to see. I also instantly receive a Slack notification when a response is posted. Go ahead, roast me, or say something nice. It's all fair game.
-  </p>
+	<div id="help" class="help-container hidden">
+		<div class="help-text">
+			<a href="#" class="help-close">
+				<svg viewbox="0 0 50 50">
+					<use xlink:href="#close-arrow">
+				</svg>
+			</a>
+			<p>
+				What do people think about you? We've all asked ourselves this question at some time or another. While in an ideal situation we learn we don't need to know the answer (just be yourself), I decided to take a stab at actually learning what people think of me. That's what this is, in case you were wondering. Now, an anonymous answer box seems obvious but I wanted to take it farther. Punching in a nice response or finding the perfect words to tear me apart only to hit send and have it whisked away into the ether isn't a very engaging experience. There's no incentive for people to submit a response if it appears to be unseen. So I'm displaying random responses for anyone to see. I also instantly receive a Slack notification when a response is posted. Go ahead, roast me, or say something nice. It's all fair game.
+			</p>
+		</div>
+	</div>
 
 	<main>
 		<h1>Scott Is…</h1>

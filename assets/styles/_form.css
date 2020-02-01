@@ -17,6 +17,7 @@ input[type="submit"] {
 input[type="text"] {
 	transition: box-shadow 0.3s ease-out;
 	background-color: var(--offwhite);
+	color: var(--text-color-dark);
 	text-indent: 0.35em;
 	width: 100%;
 	border-radius: 0;
@@ -45,7 +46,7 @@ input[type="submit"] {
 	transition: background-color 0.3s ease, color 0.3s ease;
 	max-width: 10em;
 	background: transparent;
-	color: var(--offwhite);
+	color: var(--text-color-light);
 	padding: 0.375rem 0.75rem;
 	border-radius: 0;
 	border: 2px solid var(--offwhite);

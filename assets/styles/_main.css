@@ -10,7 +10,7 @@ main {
 	h1 {
 		margin: 0 auto;
 		text-align: center;
-		color: var(--offwhite);
+		color: var(--text-color-light);
 		font: normal normal 5rem/1.2 'acier-bat-noir', sans-serif;
 
 		@media (min-width: 35em) {
@@ -42,7 +42,7 @@ main {
 .response {
 	display: inline-block;
 	line-height: 1.4;
-	color: var(--offwhite);
+	color: var(--text-color-light);
 	padding: 0 0.35em;
 
 	&.size-1 {

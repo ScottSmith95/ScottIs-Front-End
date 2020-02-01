@@ -21,7 +21,8 @@ const mainElement = document.querySelector( 'main' );
 const responseForm = document.querySelector( '.input-form' );
 const textInput = document.querySelector( '.input-form input[type="text"]' );
 const helpButton = document.querySelector( 'header .help' );
-const helpText = document.querySelector( '.help-text' );
+const helpCloseArrow = document.querySelector( '.help-close' );
+const helpText = document.querySelector( '.help-container' );
 
 /* Alerts Module */
 class Alert {
@@ -214,3 +215,4 @@ ScottIs.load_responses( get_url );
 responseForm.addEventListener( 'submit', ScottIs.handle_form );
 ScottIs.help_setup();
 helpButton.addEventListener( 'click', ScottIs.help_button );
+helpCloseArrow.addEventListener( 'click', ScottIs.help_button );

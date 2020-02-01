@@ -19,6 +19,7 @@
     "test": "eslint --ignore-path .gitignore ./",
     "build": "gulp build",
     "create-dist": "if [ -d dist ]; then rm -rf ./dist; fi && mkdir -p dist && rsync -rR {index.html,./assets/} dist",
+    "dev": "gulp & npx serve",
     "now-build": "npm i gulp-cli && npm run build && npm run create-dist"
   },
   "devDependencies": {
