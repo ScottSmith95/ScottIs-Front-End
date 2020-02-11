@@ -1,15 +1,5 @@
 {
-	"name": "ScottSmith.is",
 	"version": 2,
-	"builds": [
-		{
-			"src": "package.json",
-			"use": "@now/static-build",
-			"config": {
-				"distDir": "/dist"
-			}
-		}
-	],
 	"github": {
 		"silent": true
 	}

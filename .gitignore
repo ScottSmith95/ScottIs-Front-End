@@ -1,5 +1,7 @@
 .DS_Store
+
+.now
+
 node_modules/
 dist/
-
 assets/**/build/
