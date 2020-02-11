@@ -1,0 +1,24 @@
+@import-normalize;
+
+html {
+	box-sizing: border-box;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 100%;
+	background-color: var(--bg-color);
+	background-image: url("data:image/svg+xml;utf8,%3Csvg%20viewBox%3D'0%200%2040%2040'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cg%20fill%3D'%233C87DE'%20fill-rule%3D'evenodd'%3E%3Cellipse%20cx%3D'14.5'%20cy%3D'34.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3Cellipse%20cx%3D'24.5'%20cy%3D'34.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3Cellipse%20cx%3D'34.5'%20cy%3D'24.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3Cellipse%20cx%3D'24.5'%20cy%3D'24.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3Cellipse%20cx%3D'14.5'%20cy%3D'14.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3Cellipse%20cx%3D'4.5'%20cy%3D'14.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3Cellipse%20cx%3D'4.5'%20cy%3D'4.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3Cellipse%20cx%3D'34.5'%20cy%3D'4.5'%20rx%3D'2.5'%20ry%3D'2.5'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"); /* images/dot.svg (URI encoded) */
+	background-size: 40px;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	font-family: var(--font-fam);
+}

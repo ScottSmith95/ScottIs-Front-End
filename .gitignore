@@ -3,5 +3,5 @@
 .now
 
 node_modules/
-dist/
+public/
 assets/**/build/

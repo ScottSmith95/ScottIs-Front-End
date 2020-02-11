@@ -1,0 +1,19 @@
+:root {
+	/* Colors */
+	--blue: #009BCD;
+	--vibe-blue: #167EDA;
+	--turquoise: #53C2C9;
+	--darkblue: #007EA6;
+	--darkgrey: #444444;
+	--lightgrey: #82969C;
+	--offwhite: #EDEDED;
+	--text-color: #1A1A1A;
+	--bg-color: #167EDA;
+	--highlight-color: RGBA(147, 187, 201, 0.5);
+
+	/* Fonts */
+	--font-fam: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+	/* Misc */
+	--border-rad: 0.5rem;
+}

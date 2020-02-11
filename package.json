@@ -13,14 +13,14 @@
     "url": "https://github.com/ScottSmith95/ScottIs-Front-End/issues"
   },
   "engines": {
-    "node": "^10.13.0"
+    "node": "^12.13.0"
   },
   "scripts": {
     "test": "eslint --ignore-path .gitignore ./",
     "build": "gulp build",
-    "create-dist": "if [ -d dist ]; then rm -rf ./dist; fi && mkdir -p dist && rsync -rR {index.html,./assets/} dist",
+    "create-public": "if [ -d public ]; then rm -rf ./public; fi && mkdir -p public && rsync -rR {index.html,./assets/} public",
     "dev": "gulp & npx serve",
-    "now-build": "npm i gulp-cli && npm run build && npm run create-dist"
+    "now-build": "npm i gulp-cli && npm run build && npm run create-public"
   },
   "devDependencies": {
     "autoprefixer": "^9.7.4",
