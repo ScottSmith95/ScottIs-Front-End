@@ -29,7 +29,7 @@ const processors = [
 	require( 'postcss-import' ),
 	require( 'postcss-nested' ),
 	require( 'postcss-custom-properties' ),
-	require( 'css-mqpacker' )( { sort: true } ),
+	require( 'postcss-sort-media-queries' ),
 	require( 'autoprefixer' ),
 	require( 'postcss-normalize' ),
 	require( 'cssnano' )( { preset: 'default' } )
