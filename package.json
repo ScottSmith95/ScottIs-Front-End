@@ -18,7 +18,7 @@
   "scripts": {
     "test": "eslint --ignore-path .gitignore ./",
     "build": "gulp build",
-    "create-public": "if [ -d public ]; then rm -rf ./public; fi && mkdir -p public && rsync -rR {index.html,./assets/} public",
+    "create-public": "if [ -d public ]; then rm -rf ./public; fi && mkdir -p public && cp -R {index.html,./assets/} public",
     "dev": "gulp & npx serve",
     "now-build": "npm i gulp-cli && npm run build && npm run create-public"
   },
