@@ -110,7 +110,7 @@ const ScottIs = {
 		for ( let r in responses ) {
 			if ( Object.prototype.hasOwnProperty.call( responses, r ) ) {
 				// Add content divs
-				const response_html = `<li class="response" id="${ r }">${ responses[ r ] }</li>`;
+				const response_html = `<li class="response" id="${ r }" rel="ugc">${ responses[ r ] }</li>`;
 				response_container.insertAdjacentHTML( 'afterbegin', response_html );
 				this.word_cloud( document.getElementById( r ) );
 			}
