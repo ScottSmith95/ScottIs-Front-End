@@ -30,6 +30,7 @@ const processors = [
 	require( 'postcss-nested' ),
 	require( 'postcss-custom-properties' ),
 	require( 'postcss-sort-media-queries' ),
+	require( 'postcss-100vh-fix' ),
 	require( 'autoprefixer' ),
 	require( 'postcss-normalize' ),
 	require( 'cssnano' )( { preset: 'default' } )
