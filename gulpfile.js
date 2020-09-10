@@ -1,13 +1,10 @@
 'use strict';
 
-const gulp       = require( 'gulp' );
-const postcss    = require( 'gulp-postcss' );
-const concat     = require( 'gulp-concat' );
-// Use terser minifier with gulp-uglify for ES2015 support.
-const composer   = require( 'gulp-uglify/composer' );
-const terser     = require( 'terser' );
-const minify     = composer( terser, console );
-const sprite     = require( 'gulp-svg-sprite' );
+const gulp = require( 'gulp' );
+const postcss = require( 'gulp-postcss' );
+const concat = require( 'gulp-concat' );
+const minify = require( 'gulp-terser' );
+const sprite = require( 'gulp-svg-sprite' );
 
 const paths = {
 	styles: {

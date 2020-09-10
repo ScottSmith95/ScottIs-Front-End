@@ -22,22 +22,21 @@
     "dev": "gulp & npx serve"
   },
   "devDependencies": {
-    "autoprefixer": "^9.7.6",
+    "autoprefixer": "^9.8.6",
     "boomsvgloader": "0.0.2",
     "cssnano": "^4.1.10",
-    "eslint": "^7.0.0",
+    "eslint": "^7.8.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^8.0.0",
     "gulp-svg-sprite": "^1.5.0",
-    "gulp-uglify": "^3.0.2",
+    "gulp-terser": "^1.4.0",
     "postcss-100vh-fix": "^0.1.1",
     "postcss-custom-properties": "^9.1.1",
     "postcss-import": "^12.0.1",
-    "postcss-nested": "^4.2.1",
+    "postcss-nested": "^4.2.3",
     "postcss-normalize": "^9.0.0",
-    "postcss-sort-media-queries": "^1.4.24",
-    "terser": "^4.6.13"
+    "postcss-sort-media-queries": "^1.7.26"
   },
   "browserslist": [
     "last 2 versions",
@@ -45,6 +44,6 @@
     "Firefox ESR"
   ],
   "dependencies": {
-    "gulp-cli": "^2.2.0"
+    "gulp-cli": "^2.3.0"
   }
 }
