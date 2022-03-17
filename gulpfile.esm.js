@@ -1,10 +1,10 @@
 'use strict';
 
-const gulp = require( 'gulp' );
-const postcss = require( 'gulp-postcss' );
-const concat = require( 'gulp-concat' );
-const minify = require( 'gulp-terser' );
-const sprite = require( 'gulp-svg-sprite' );
+import gulp from 'gulp';
+import postcss from 'gulp-postcss';
+import concat from 'gulp-concat';
+import minify from 'gulp-terser';
+import sprite from 'gulp-svg-sprite';
 
 const paths = {
 	styles: {
