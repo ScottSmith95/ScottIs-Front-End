@@ -156,37 +156,37 @@ const ScottIs = {
 
 	load_responses( url, limit = 100 ) {
 		const req_url = `${ url }?limit=${ limit }`;
-		const httpRequest = new XMLHttpRequest();
-		httpRequest.open( 'GET', req_url, true );
-		httpRequest.send();
-		httpRequest.onload = () => {
-			response_json = JSON.parse( httpRequest.responseText );
+		fetch( req_url )
+		.then( ( response ) => response.json() )
+		.then( ( response_json ) => {
 			this.layout( response_json );
-		};
+		} );
+		
 	},
 
 	send_response( url, data ) {
-		const httpRequest = new XMLHttpRequest();
-		httpRequest.open( 'POST', url, true );
-		httpRequest.onreadystatechange = () => {
-			this.after_response( httpRequest );
-		};
-		httpRequest.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8' );
-		httpRequest.send( data );
-	},
-
-	after_response( httpRequest ) {
-		if ( httpRequest.readyState === XMLHttpRequest.DONE ) {
-			if ( httpRequest.status === 200 ) {
+		fetch( url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+			  },
+			body: data
+		} )
+		.then((response) => {
+			if ( response.status === 202 ) {
+				Alert.make_alert( 'Uh oh! That is a duplicate response. Try coming up with something new!', 'failure' );
+			} else if ( !response.ok ) {
+			  scottis.make_alert( "Uh small problem. Tell me about it. 😕", 'failure' );
+			  throw new Error( 'There was a problem with the request.' );
+			} else {
 				Alert.make_alert( 'Success! Message posted. 👍', 'success' );
 				this.load_responses( get_url );
-			} else if ( httpRequest.status === 202 ) {
-				Alert.make_alert( 'Uh oh! That is a duplicate response. Try coming up with something new!', 'failure' );
-			} else {
-				Alert.make_alert( 'Uh small problem. Tell me about it. 😕', 'failure' );
-				console.error( 'There was a problem with the request.' );
 			}
-		}
+		} )
+		.catch((error) => {
+			Alert.make_alert( 'Uh small problem. Tell me about it. 😕', 'failure' );
+			console.error( 'There was a problem with the request.', error );
+		});
 	},
 
 	help_button( event ) {
@@ -204,11 +204,22 @@ const ScottIs = {
 	}
 };
 
+function loadSvgSprite( url ) {
+	fetch( url )
+	.then( ( response ) => response.text() )
+	.then( ( spriteText ) => {
+		const div = document.createElement( 'div' );
+		div.style.cssText = 'border: 0; clip: rect(0 0 0 0); height: 0; overflow: hidden; padding: 0; position: absolute; width: 0;';
+		div.innerHTML = spriteText;
+		document.body.insertBefore( div, document.body.childNodes[0] );
+	} );
+}
+
 /* Client Actions */
 try {
-	boomsvgloader.load( '/assets/images/icons/icon-sprite.svg' );
-} catch ( error ) {
-	console.error( error );
+	loadSvgSprite( '/assets/images/icons/icon-sprite.svg' );
+} catch ( e ) {
+	console.log( e )
 }
 
 ScottIs.load_responses( get_url );

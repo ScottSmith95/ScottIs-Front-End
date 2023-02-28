@@ -13,7 +13,7 @@ const paths = {
 		watch: [ 'assets/styles/**/*.css', '!assets/styles/build/**' ]
 	},
 	scripts: {
-		src: [ 'node_modules/boomsvgloader/dist/js/boomsvgloader.js', 'assets/scripts/*.js', '!assets/scripts/build/**' ],
+		src: [ 'assets/scripts/*.js', '!assets/scripts/build/**' ],
 		dest: 'assets/scripts/build/'
 	},
 	sprites: {
