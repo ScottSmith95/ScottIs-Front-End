@@ -13,7 +13,7 @@
     "url": "https://github.com/ScottSmith95/ScottIs-Front-End/issues"
   },
   "engines": {
-    "node": "^18.16.0"
+    "node": "^18.15.0"
   },
   "scripts": {
     "test": "eslint --ignore-path .gitignore ./",
@@ -35,7 +35,8 @@
     "postcss-nested": "^6.0.1",
     "postcss-normalize": "^10.0.1",
     "postcss-sort-media-queries": "^4.2.1",
-    "svg-sprite": "^2.0.2"
+    "svg-sprite": "^2.0.2",
+    "terser": "^5.16.6"
   },
   "browserslist": [
     "last 2 versions",
