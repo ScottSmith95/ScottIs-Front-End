@@ -1,0 +1,17 @@
+{
+	"map": { "inline": false },
+	"plugins": {
+		"postcss-import": {},
+		"postcss-normalize": {},
+		"postcss-nested": {},
+		"postcss-custom-properties": {},
+		"postcss-sort-media-queries": {},
+		"postcss-100vh-fix": {},
+		"autoprefixer": {},
+		"cssnano": {
+			"preset": [
+				"default"
+			]
+		}
+	}
+}

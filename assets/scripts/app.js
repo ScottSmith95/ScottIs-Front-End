@@ -218,8 +218,8 @@ function loadSvgSprite( url ) {
 /* Client Actions */
 try {
 	loadSvgSprite( '/assets/images/icons/icon-sprite.svg' );
-} catch ( e ) {
-	console.log( e )
+} catch ( error ) {
+	console.log( error );
 }
 
 ScottIs.load_responses( get_url );

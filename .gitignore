@@ -1,7 +1,4 @@
 .DS_Store
 
-.now
-
 node_modules/
-public/
-assets/**/build/
+_site/
