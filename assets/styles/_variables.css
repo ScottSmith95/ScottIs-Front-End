@@ -9,7 +9,7 @@
 	--offwhite: #EDEDED;
 	--text-color-light: #EDEDED;
 	--text-color-dark: #2E2E2E;
-	--bg-color: #167EDA;
+	--bg-color: var(--vibe-blue);
 	--highlight-color: RGBA(147, 187, 201, 0.5);
 
 	/* Fonts */
@@ -17,4 +17,13 @@
 
 	/* Misc */
 	--border-rad: 0.5rem;
+}
+
+@media (color-gamut: p3) {
+:root {
+	--blue: color(display-p3 0.2 0.6 0.85);
+	--turquoise: color(display-p3 0.3 0.75 0.75);
+	--blue-secondary: color(display-p3 0.15 0.5 0.7);
+	--vibe-blue: color(display-p3 0.16 0.483 0.915);
+}
 }
