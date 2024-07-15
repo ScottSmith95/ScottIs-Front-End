@@ -1,8 +1,8 @@
 {
-	"redirects": [
-		{ "source": "/favicon.svg", "destination": "/assets/images/favicons/favicons.svg", "permanent": false }
-	  ],
-	  "github": {
+	"rewrites": [
+		{ "source": "/favicon.svg", "destination": "/assets/images/favicons/favicon.svg" }
+	],
+    "github": {
 		"silent": true
 	}
 }
