@@ -25,18 +25,18 @@
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
     "autoprefixer": "^10.4.19",
-    "cssnano": "^6.1.2",
-    "eslint": "^9.0.0",
-    "postcss": "^8.4.38",
+    "cssnano": "^7.0.4",
+    "eslint": "^9.7.0",
+    "postcss": "^8.4.39",
     "postcss-100vh-fix": "^1.0.2",
-    "postcss-custom-properties": "^13.3.7",
+    "postcss-custom-properties": "^13.3.12",
     "postcss-import": "^16.1.0",
-    "postcss-load-config": "^5.0.3",
+    "postcss-load-config": "^6.0.1",
     "postcss-nested": "^6.0.1",
     "postcss-normalize": "^10.0.1",
     "postcss-sort-media-queries": "^5.2.0",
     "svg-sprite": "^2.0.4",
-    "terser": "^5.30.3"
+    "terser": "^5.31.2"
   },
   "browserslist": [
     "last 2 versions",
