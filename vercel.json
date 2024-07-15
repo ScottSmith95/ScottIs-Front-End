@@ -1,7 +1,4 @@
 {
-	"rewrites": [
-		{ "source": "/favicon.svg", "destination": "/assets/images/favicons/favicon.svg" }
-	],
     "github": {
 		"silent": true
 	}
