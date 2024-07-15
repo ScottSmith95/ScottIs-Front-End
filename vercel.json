@@ -1,5 +1,8 @@
 {
-	"github": {
+	"redirects": [
+		{ "source": "/favicon.svg", "destination": "/assets/images/favicons/favicons.svg", "permanent": false }
+	  ],
+	  "github": {
 		"silent": true
 	}
 }
