@@ -13,30 +13,32 @@
     "url": "https://github.com/ScottSmith95/ScottIs-Front-End/issues"
   },
   "engines": {
-    "node": "^20.x"
+    "node": ">=20.x"
   },
   "scripts": {
-    "test": "eslint --ignore-path .gitignore ./",
+    "test": "eslint ./",
     "dev": "npx @11ty/eleventy --watch --serve",
     "dev:debug": "DEBUG=Eleventy* npx @11ty/eleventy",
     "build": "npx @11ty/eleventy",
     "serve": "npx serve _site"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1",
-    "autoprefixer": "^10.4.19",
-    "cssnano": "^7.0.4",
-    "eslint": "^9.7.0",
-    "postcss": "^8.4.39",
-    "postcss-100vh-fix": "^1.0.2",
-    "postcss-custom-properties": "^13.3.12",
+    "@11ty/eleventy": "^3.1.1",
+    "@eslint/js": "^9.28.0",
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.0.7",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0",
+    "postcss": "^8.5.5",
+    "postcss-100vh-fix": "^2.0.0",
+    "postcss-custom-properties": "^14.0.6",
     "postcss-import": "^16.1.0",
     "postcss-load-config": "^6.0.1",
-    "postcss-nested": "^6.0.1",
-    "postcss-normalize": "^10.0.1",
+    "postcss-nested": "^7.0.2",
+    "postcss-normalize": "^13.0.1",
     "postcss-sort-media-queries": "^5.2.0",
     "svg-sprite": "^2.0.4",
-    "terser": "^5.31.2"
+    "terser": "^5.42.0"
   },
   "browserslist": [
     "last 2 versions",
