@@ -1,8 +1,5 @@
 'use strict';
 
-/* Global Variables */
-/* global boomsvgloader:false */
-
 const api_version = '1.4';
 let api_domain;
 
@@ -176,7 +173,7 @@ const ScottIs = {
 			if ( response.status === 202 ) {
 				Alert.make_alert( 'Uh oh! That is a duplicate response. Try coming up with something new!', 'failure' );
 			} else if ( !response.ok ) {
-			  scottis.make_alert( "Uh small problem. Tell me about it. 😕", 'failure' );
+			  Alert.make_alert( "Uh small problem. Tell me about it. 😕", 'failure' );
 			  throw new Error( 'There was a problem with the request.' );
 			} else {
 				Alert.make_alert( 'Success! Message posted. 👍', 'success' );
