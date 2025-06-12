@@ -22,38 +22,38 @@ const helpText = document.querySelector( '.help-container' );
 
 /* Responses Web Component */
 class ResponseList extends HTMLElement {
-       connectedCallback() {
-               this.load();
-       }
+	connectedCallback() {
+		this.load();
+	}
 
-       async load( url = get_url, limit = 100 ) {
-               this.innerHTML = '<p class="loading-state">Loading…</p>';
-               const reqUrl = `${ url }?limit=${ limit }`;
-               try {
-                       const res = await fetch( reqUrl );
-                       const json = await res.json();
+	async load( url = get_url, limit = 100 ) {
+		this.innerHTML = '<p class="loading-state">Loading…</p>';
+		const reqUrl = `${ url }?limit=${ limit }`;
+		try {
+			const res = await fetch( reqUrl );
+			const json = await res.json();
 
-                       const ul = document.createElement( 'ul' );
-                       ul.classList.add( 'responses' );
+			const ul = document.createElement( 'ul' );
+			ul.classList.add( 'responses' );
 
-                       for ( const id in json ) {
-                               if ( Object.prototype.hasOwnProperty.call( json, id ) ) {
-                                       const li = document.createElement( 'li' );
-                                       li.classList.add( 'response' );
-                                       li.id = id;
-                                       li.textContent = json[ id ];
-                                       ScottIs.word_cloud( li );
-                                       ul.insertAdjacentElement( 'afterbegin', li );
-                               }
-                       }
+			for ( const id in json ) {
+				if ( Object.prototype.hasOwnProperty.call( json, id ) ) {
+					const li = document.createElement( 'li' );
+					li.classList.add( 'response' );
+					li.id = id;
+					li.textContent = json[ id ];
+					ScottIs.word_cloud( li );
+					ul.insertAdjacentElement( 'afterbegin', li );
+				}
+			}
 
-                       this.innerHTML = '';
-                       this.appendChild( ul );
-               } catch ( error ) {
-                       this.innerHTML = '<p class="loading-state">Failed to load</p>';
-                       console.error( 'There was a problem loading responses.', error );
-               }
-       }
+			this.innerHTML = '';
+			this.appendChild( ul );
+		} catch ( error ) {
+				this.innerHTML = '<p class="loading-state">Failed to load</p>';
+				console.error( 'There was a problem loading responses.', error );
+		}
+	}
 }
 
 customElements.define( 'response-list', ResponseList );
@@ -188,13 +188,13 @@ const ScottIs = {
 		responseForm.reset();
 	},
 
-       load_responses( url, limit = 100 ) {
-               const component = document.querySelector( 'response-list' );
-               if ( component ) {
-                       component.load( url, limit );
-               }
-
-       },
+	load_responses( url, limit = 100 ) {
+		const component = document.querySelector( 'response-list' );
+		if ( component ) {
+			component.load( url, limit );
+		}
+	
+	},
 
 	send_response( url, data ) {
 		fetch( url, {
