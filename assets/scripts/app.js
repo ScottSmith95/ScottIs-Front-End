@@ -41,6 +41,7 @@ class ResponseList extends HTMLElement {
 					const li = document.createElement( 'li' );
 					li.classList.add( 'response' );
 					li.id = id;
+					li.setAttribute('rel', 'ugc');
 					li.textContent = json[ id ];
 					ScottIs.word_cloud( li );
 					ul.insertAdjacentElement( 'afterbegin', li );
@@ -127,29 +128,6 @@ class Alert {
 
 /* Client Module */
 const ScottIs = {
-
-	layout( responses ) {
-		// Add Response container to DOM.
-		let response_container = document.querySelector( '.responses' );
-		if ( response_container ) {
-			response_container.remove();
-		}
-		const response_container_element = document.createElement( 'ul' );
-		response_container_element.classList.add( 'responses' );
-		mainElement.insertAdjacentElement( 'beforeend', response_container_element );
-		// Redefine element after removal.
-		response_container = document.querySelector( '.responses' );
-
-		// Position each response with a random position.
-		for ( let r in responses ) {
-			if ( Object.prototype.hasOwnProperty.call( responses, r ) ) {
-				// Add content divs
-				const response_html = `<li class="response" id="${ r }" rel="ugc">${ responses[ r ] }</li>`;
-				response_container.insertAdjacentHTML( 'afterbegin', response_html );
-				this.word_cloud( document.getElementById( r ) );
-			}
-		}
-	},
 
 	getRandomIntInclusive( min, max ) {
 		const low = Math.ceil( min );
