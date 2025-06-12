@@ -12,6 +12,7 @@
   "bugs": {
     "url": "https://github.com/ScottSmith95/ScottIs-Front-End/issues"
   },
+  "type": "module",
   "engines": {
     "node": ">=20.x"
   },

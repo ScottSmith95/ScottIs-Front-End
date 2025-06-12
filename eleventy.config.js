@@ -1,11 +1,11 @@
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 
-const path = require("path");
-const { open, stat, readFile, readdir, writeFile, mkdir } = require("node:fs/promises");
-const postcss = require("postcss");
-const postcssrc = require("postcss-load-config");
-const { minify } = require("terser");
-const svgSprite = require("svg-sprite");
+import path from "path";
+import { open, stat, readFile, readdir, writeFile, mkdir } from "node:fs/promises";
+import postcss from "postcss";
+import postcssrc from "postcss-load-config";
+import { minify } from "terser";
+import svgSprite from "svg-sprite";
 
 const paths = {
 	sprites: {
@@ -40,7 +40,8 @@ async function saveSourcemap( filepath, map ) {
 	);
 }
 
-module.exports = function ( eleventyConfig ) {
+export default function ( eleventyConfig ) {
+
 	// Passthrough files
 	eleventyConfig.addPassthroughCopy("./manifest.webmanifest");
 	eleventyConfig.addPassthroughCopy("./assets/images");
@@ -77,6 +78,10 @@ module.exports = function ( eleventyConfig ) {
 				return result.css;
 			};
 		},
+		
+		compileOptions: {
+			permalink: "raw"
+		},
 	});
 
 	eleventyConfig.addExtension( 'js', {
@@ -111,6 +116,10 @@ module.exports = function ( eleventyConfig ) {
 			return async ( data ) => {
 				return result.code;
 			};
+		},
+		
+		compileOptions: {
+			permalink: "raw"
 		},
 	} );
 
