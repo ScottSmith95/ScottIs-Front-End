@@ -40,10 +40,10 @@ main {
 }
 
 .response {
-	display: inline-block;
-	line-height: 1.4;
-	color: var(--text-color-light);
-	padding: 0 0.35em;
+        display: inline-block;
+        line-height: 1.4;
+        color: var(--text-color-light);
+        padding: 0 0.35em;
 
 	&.size-1 {
 		font-size: 1.2em;
@@ -59,7 +59,13 @@ main {
 		opacity: 0.75;
 	}
 
-	&.size-4 {
-		font-size: 1.8em;
-	}
+        &.size-4 {
+                font-size: 1.8em;
+        }
+}
+
+.loading-state {
+        text-align: center;
+        color: var(--text-color-light);
+        padding: 1em 0;
 }
