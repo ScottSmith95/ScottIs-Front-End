@@ -11,7 +11,6 @@ if ( location.hostname.includes( 'dev' ) ) {
 
 const get_url = `https://${ api_domain }/v${ api_version }/responses`;
 const post_url = `https://${ api_domain }/v${ api_version }/responses`;
-let response_json;
 
 /* Page Elements */
 const mainElement = document.querySelector( 'main' );
@@ -20,6 +19,44 @@ const textInput = document.querySelector( '.input-form input[type="text"]' );
 const helpButton = document.querySelector( 'header .help' );
 const helpCloseArrow = document.querySelector( '.help-close' );
 const helpText = document.querySelector( '.help-container' );
+
+/* Responses Web Component */
+class ResponseList extends HTMLElement {
+       connectedCallback() {
+               this.load();
+       }
+
+       async load( url = get_url, limit = 100 ) {
+               this.innerHTML = '<p class="loading-state">Loading…</p>';
+               const reqUrl = `${ url }?limit=${ limit }`;
+               try {
+                       const res = await fetch( reqUrl );
+                       const json = await res.json();
+
+                       const ul = document.createElement( 'ul' );
+                       ul.classList.add( 'responses' );
+
+                       for ( const id in json ) {
+                               if ( Object.prototype.hasOwnProperty.call( json, id ) ) {
+                                       const li = document.createElement( 'li' );
+                                       li.classList.add( 'response' );
+                                       li.id = id;
+                                       li.textContent = json[ id ];
+                                       ScottIs.word_cloud( li );
+                                       ul.insertAdjacentElement( 'afterbegin', li );
+                               }
+                       }
+
+                       this.innerHTML = '';
+                       this.appendChild( ul );
+               } catch ( error ) {
+                       this.innerHTML = '<p class="loading-state">Failed to load</p>';
+                       console.error( 'There was a problem loading responses.', error );
+               }
+       }
+}
+
+customElements.define( 'response-list', ResponseList );
 
 /* Alerts Module */
 class Alert {
@@ -151,15 +188,13 @@ const ScottIs = {
 		responseForm.reset();
 	},
 
-	load_responses( url, limit = 100 ) {
-		const req_url = `${ url }?limit=${ limit }`;
-		fetch( req_url )
-		.then( ( response ) => response.json() )
-		.then( ( response_json ) => {
-			this.layout( response_json );
-		} );
-		
-	},
+       load_responses( url, limit = 100 ) {
+               const component = document.querySelector( 'response-list' );
+               if ( component ) {
+                       component.load( url, limit );
+               }
+
+       },
 
 	send_response( url, data ) {
 		fetch( url, {
