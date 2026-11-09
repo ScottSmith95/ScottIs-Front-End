@@ -28,19 +28,33 @@ __    / /  | |     __   | |     | |    | |       | |
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#167EDA">
 <link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="{{ apiUrl | escape }}" crossorigin>
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin>
 
 <!-- Icons -->
 <link rel="icon" href="/assets/images/favicons/favicon.svg">
 <link rel="mask-icon" href="/assets/images/favicons/mask-icon.svg" color="#167EDA">
 
 <!-- CSS -->
-<link rel="stylesheet" href="/assets/styles/app.css?v1.4">
+<link rel="stylesheet" href="/assets/styles/app.css?v1.6">
 
 <!-- Typekit -->
 <link rel="stylesheet" href="https://use.typekit.net/elq1qbu.css">
 </head>
 
 <body>
+	<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+		<defs>
+			<symbol id="slash" viewBox="0 0 50 50">
+				<path fill="#FFF" fill-rule="evenodd" d="M9.690843 50H0L40.309157 0H50"></path>
+			</symbol>
+			<symbol id="close-arrow" viewBox="0 0 38 12">
+				<polyline fill="none" stroke="#82969C" stroke-linecap="round" stroke-width="5" points="443 32 459 38 475 32" transform="translate(-440 -29)"></polyline>
+			</symbol>
+		</defs>
+	</svg>
+
 	<header>
 		<a href="https://ScottHSmith.com" class="homelink">
 			<svg viewbox="0 0 50 50">
@@ -54,7 +68,7 @@ __    / /  | |     __   | |     | |    | |       | |
 		</a>
 	</header>
 
-	<div id="help" class="help-container hidden">
+	<div id="help" class="help-container">
 		<div class="help-text">
 			<a href="#" aria-label="Close" class="help-close">
 				<svg viewbox="0 0 50 50">
@@ -69,14 +83,37 @@ __    / /  | |     __   | |     | |    | |       | |
 
 	<main>
 		<h1>Scott Is…</h1>
-                <form class="input-form" action="/" method="POST">
-                        <input aria-label="Scott is" enterkeyhint="send" type="text" name="response" autocomplete="off" required autofocus>
-                        <input type="submit" name="submit" value="Send">
-                </form>
-                <response-list></response-list>
+		<form class="input-form" action="{{ apiUrl | escape }}" method="POST">
+			<input aria-label="Scott is" aria-describedby="response-hint" enterkeyhint="send" type="text" name="response" maxlength="20" pattern=".*\S.*" required autofocus>
+			<input type="submit" name="submit" value="Send">
+		</form>
+		<p id="response-hint" class="input-hint">Say it in 20 characters or fewer.</p>
+		<div id="sent" class="form-result alert success" role="status">
+			<p>Success! Message posted. 👍</p>
+			<a href="#">Dismiss</a>
+		</div>
+		<div id="duplicate" class="form-result alert failure" role="status">
+			<p>That response has already been posted. Try something new!</p>
+			<a href="#">Dismiss</a>
+		</div>
+		<div id="error" class="form-result alert failure" role="status">
+			<p>We couldn't confirm your message was posted. Your browser's Back button may recover your text.</p>
+			<a href="#">Dismiss</a>
+		</div>
+		<response-list>
+			<p class="input-hint snapshot-note">Showing up to 25 recent responses from the last site update. New responses may not appear here yet.</p>
+			<ul class="responses">
+				{% for response in responseSnapshot %}
+				<li class="response size-{{ response.size }}" id="{{ response.id | escape }}">{{ response.text | escape }}</li>
+				{% else %}
+				<li class="loading-state">No responses yet. Be the first!</li>
+				{% endfor %}
+			</ul>
+		</response-list>
+		<button type="button" class="load-more" hidden>Load more</button>
         </main>
 
-	<script async type="text/javascript" src="/assets/scripts/app.js?v1.4"></script>
+	<script defer src="/assets/scripts/app.js?v1.6"></script>
 
 </body>
 

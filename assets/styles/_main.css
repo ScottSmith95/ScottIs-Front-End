@@ -69,3 +69,35 @@ main {
 	color: var(--text-color-light);
 	padding: 1em 0;
 }
+
+.load-more {
+	display: block;
+	margin: 0 auto 2rem;
+	padding: 0.6rem 1.1rem;
+	background: transparent;
+	border: 2px solid var(--offwhite);
+	color: var(--text-color-light);
+	cursor: pointer;
+	font-size: 1rem;
+	transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+
+	&:hover {
+		background-color: var(--offwhite);
+		color: var(--vibe-blue);
+	}
+
+	&[hidden] {
+		display: none;
+	}
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: wait;
+	}
+}
+
+.input-hint {
+	text-align: center;
+	font-size: 1rem;
+	color: var(--text-color-light);
+}

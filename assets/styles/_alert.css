@@ -31,6 +31,18 @@
 	}
 }
 
+.form-result {
+	display: none;
+
+	&:target {
+		display: block;
+	}
+
+	a {
+		color: inherit;
+	}
+}
+
 @keyframes add-alert {
 	from {
 		transform: scale(0.2);

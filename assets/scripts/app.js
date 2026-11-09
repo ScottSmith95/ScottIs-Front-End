@@ -1,63 +1,114 @@
 'use strict';
 
-const api_version = '1.4';
-let api_domain;
-
-if ( location.hostname.includes( 'dev' ) ) {
-	api_domain = 'dev-api.scottsmith.is';
-} else {
-	api_domain = 'api.scottsmith.is';
-}
-
-const get_url = `https://${ api_domain }/v${ api_version }/responses`;
-const post_url = `https://${ api_domain }/v${ api_version }/responses`;
+const initial_response_limit = 25;
+const response_batch_size = 25;
 
 /* Page Elements */
-const mainElement = document.querySelector( 'main' );
 const responseForm = document.querySelector( '.input-form' );
 const textInput = document.querySelector( '.input-form input[type="text"]' );
-const helpButton = document.querySelector( 'header .help' );
-const helpCloseArrow = document.querySelector( '.help-close' );
-const helpText = document.querySelector( '.help-container' );
+const loadMoreButton = document.querySelector( '.load-more' );
+const get_url = responseForm.action;
+const post_url = get_url;
 
 /* Responses Web Component */
 class ResponseList extends HTMLElement {
 	connectedCallback() {
+		this.currentLimit = initial_response_limit;
+		this.lastLoadedCount = 0;
+		this.revision = 0;
 		this.load();
 	}
 
-	async load( url = get_url, limit = 100 ) {
-		this.innerHTML = '<p class="loading-state">Loading…</p>';
+	createResponseItem( id, responseText ) {
+		const li = document.createElement( 'li' );
+		li.classList.add( 'response' );
+		li.id = `${ id }`;
+		li.setAttribute( 'rel', 'ugc' );
+		li.textContent = responseText;
+		ScottIs.word_cloud( li );
+		return li;
+	}
+
+	setLoadMoreVisibility() {
+		if ( loadMoreButton ) {
+			loadMoreButton.hidden = this.lastLoadedCount < this.currentLimit;
+		}
+	}
+
+	async load( url = get_url, limit = this.currentLimit ) {
+		if ( this.loading ) return;
+		this.loading = true;
+		const revision = this.revision;
+		if ( !this.children.length ) this.innerHTML = '<p class="loading-state">Loading…</p>';
+		this.setAttribute( 'aria-busy', 'true' );
+		if ( loadMoreButton ) {
+			loadMoreButton.disabled = true;
+		}
+
 		const reqUrl = `${ url }?limit=${ limit }`;
 		try {
 			const res = await fetch( reqUrl );
+			if ( !res.ok ) throw new Error( `Response API returned ${ res.status }` );
 			const json = await res.json();
+			if ( !json || Array.isArray( json ) || typeof json !== 'object' || Object.values( json ).some( value => typeof value !== 'string' ) ) {
+				throw new Error( 'Invalid responses payload' );
+			}
+			const entries = Object.entries( json );
 
 			const ul = document.createElement( 'ul' );
 			ul.classList.add( 'responses' );
 
-			for ( const id in json ) {
-				if ( Object.prototype.hasOwnProperty.call( json, id ) ) {
-					const li = document.createElement( 'li' );
-					li.classList.add( 'response' );
-					li.id = id;
-					li.setAttribute('rel', 'ugc');
-					li.textContent = json[ id ];
-					ScottIs.word_cloud( li );
-					ul.insertAdjacentElement( 'afterbegin', li );
-				}
+			for ( let i = entries.length - 1; i >= 0; i-- ) {
+				const [ id, responseText ] = entries[ i ];
+				const li = this.createResponseItem( id, responseText );
+				ul.appendChild( li );
 			}
 
+			if ( revision !== this.revision ) return;
 			this.innerHTML = '';
 			this.appendChild( ul );
+			this.currentLimit = limit;
+			this.lastLoadedCount = entries.length;
+			this.setLoadMoreVisibility();
 		} catch ( error ) {
-				this.innerHTML = '<p class="loading-state">Failed to load</p>';
-				console.error( 'There was a problem loading responses.', error );
+			if ( !this.querySelector( '.responses' ) ) this.innerHTML = '<p class="loading-state">Failed to load</p>';
+			else Alert.make_alert( 'Could not refresh responses. Showing the responses already loaded.', 'failure' );
+			console.error( 'There was a problem loading responses.', error );
+		} finally {
+			this.loading = false;
+			this.removeAttribute( 'aria-busy' );
+			if ( loadMoreButton ) {
+				loadMoreButton.disabled = false;
+			}
 		}
 	}
-}
 
-customElements.define( 'response-list', ResponseList );
+	prependResponse( responseText, id = Date.now() ) {
+		if ( typeof responseText !== 'string' || responseText.length === 0 ) {
+			return;
+		}
+
+		this.revision++;
+		let ul = this.querySelector( 'ul.responses' );
+		if ( !ul ) {
+			ul = document.createElement( 'ul' );
+			ul.classList.add( 'responses' );
+			this.innerHTML = '';
+			this.appendChild( ul );
+		}
+
+		ul.querySelector( '.loading-state' )?.remove();
+		const li = this.createResponseItem( id, responseText );
+		ul.insertAdjacentElement( 'afterbegin', li );
+
+		while ( ul.children.length > this.currentLimit ) {
+			ul.lastElementChild.remove();
+		}
+
+		this.lastLoadedCount = ul.children.length;
+		this.setLoadMoreVisibility();
+	}
+}
 
 /* Alerts Module */
 class Alert {
@@ -103,7 +154,9 @@ class Alert {
 		const textEl = document.createElement( 'p' );
 		textEl.textContent = message;
 		alertEl.appendChild( textEl );
-		responseForm.insertAdjacentElement( 'afterend', alertEl );
+		if ( responseForm ) {
+			responseForm.insertAdjacentElement( 'afterend', alertEl );
+		}
 
 		return alertEl;
 	}
@@ -151,11 +204,12 @@ const ScottIs = {
 	 */
 	handle_form( event ) {
 		event.preventDefault();
+		textInput.value = textInput.value.trim();
 		if ( textInput.value.length > 20 ) {
 			Alert.make_alert( 'Try to keep responses under 20 chars. 😅', 'failure' );
 			return false;
 		}
-		if ( textInput.value.length == 0 ) {
+		if ( textInput.value.length === 0 ) {
 			Alert.make_alert( "You've gotta actually have something to say. 😒", 'failure' );
 			return false;
 		}
@@ -163,77 +217,76 @@ const ScottIs = {
 		const data = ScottIs.serialize( responseForm );
 
 		ScottIs.send_response( post_url, data );
-		responseForm.reset();
 	},
 
-	load_responses( url, limit = 100 ) {
+	load_responses( url, limit = initial_response_limit ) {
 		const component = document.querySelector( 'response-list' );
 		if ( component ) {
 			component.load( url, limit );
 		}
-	
+	},
+
+	prepend_response( responseText, timestamp ) {
+		const component = document.querySelector( 'response-list' );
+		if ( component && typeof component.prependResponse === 'function' ) {
+			component.prependResponse( responseText, timestamp );
+			return;
+		}
+		this.load_responses( get_url, initial_response_limit );
 	},
 
 	send_response( url, data ) {
+		const submittedText = textInput.value;
 		fetch( url, {
 			method: 'POST',
 			headers: {
+				'Accept': 'application/json',
 				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-			  },
+			},
 			body: data
 		} )
-		.then((response) => {
+		.then( async ( response ) => {
+			let payload;
+			try {
+				payload = await response.json();
+			} catch {
+				payload = null;
+			}
+
 			if ( response.status === 202 ) {
 				Alert.make_alert( 'Uh oh! That is a duplicate response. Try coming up with something new!', 'failure' );
 			} else if ( !response.ok ) {
-			  Alert.make_alert( "Uh small problem. Tell me about it. 😕", 'failure' );
-			  throw new Error( 'There was a problem with the request.' );
+				Alert.make_alert( 'Uh small problem. Tell me about it. 😕', 'failure' );
+				throw new Error( 'There was a problem with the request.' );
+			} else if ( !payload || typeof payload.response !== 'string' ) {
+				throw new Error( 'Invalid submission response' );
 			} else {
+				if ( textInput.value === submittedText ) textInput.value = '';
 				Alert.make_alert( 'Success! Message posted. 👍', 'success' );
-				this.load_responses( get_url );
+				this.prepend_response( payload?.response || submittedText, payload?.timestamp );
 			}
 		} )
-		.catch((error) => {
+		.catch( ( error ) => {
 			Alert.make_alert( 'Uh small problem. Tell me about it. 😕', 'failure' );
 			console.error( 'There was a problem with the request.', error );
-		});
+		} );
 	},
 
-	help_button( event ) {
+	load_more_responses( event ) {
 		event.preventDefault();
-		helpButton.classList.toggle( 'visible' );
-		helpText.classList.toggle( 'hidden' );
-		helpText.classList.toggle( 'visible' );
-	},
-
-	help_setup() {
-		if ( window.location.hash == '#help' ) {
-			helpButton.classList.toggle( 'visible' );
-			helpText.classList.remove( 'hidden' );
+		const component = document.querySelector( 'response-list' );
+		if ( component ) {
+			component.load( get_url, component.currentLimit + response_batch_size );
 		}
 	}
 };
 
-function loadSvgSprite( url ) {
-	fetch( url )
-	.then( ( response ) => response.text() )
-	.then( ( spriteText ) => {
-		const div = document.createElement( 'div' );
-		div.style.cssText = 'border: 0; clip: rect(0 0 0 0); height: 0; overflow: hidden; padding: 0; position: absolute; width: 0;';
-		div.innerHTML = spriteText;
-		document.body.insertBefore( div, document.body.childNodes[0] );
-	} );
-}
-
 /* Client Actions */
-try {
-	loadSvgSprite( '/assets/images/icons/icon-sprite.svg' );
-} catch ( error ) {
-	console.log( error );
+customElements.define( 'response-list', ResponseList );
+document.documentElement.classList.replace( 'no-js', 'js' );
+if ( responseForm ) {
+	responseForm.addEventListener( 'submit', ScottIs.handle_form );
 }
-
-ScottIs.load_responses( get_url );
-responseForm.addEventListener( 'submit', ScottIs.handle_form );
-ScottIs.help_setup();
-helpButton.addEventListener( 'click', ScottIs.help_button );
-helpCloseArrow.addEventListener( 'click', ScottIs.help_button );
+if ( loadMoreButton ) {
+	loadMoreButton.addEventListener( 'click', ScottIs.load_more_responses );
+}
